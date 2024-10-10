@@ -6,7 +6,7 @@ import {
   update,
   create,
 } from "../services/prescriptionService";
-import { checkMedicationInRxNorm } from "../apis/rxNormAPI";
+import { checkMedicationInRxNorm } from "../externalAPIs/rxNormAPI";
 import { validationResult } from "express-validator";
 
 // Create a new prescription
