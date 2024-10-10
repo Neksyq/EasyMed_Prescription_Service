@@ -1,5 +1,6 @@
 import pool from "../config/db";
 import { ResultSetHeader } from "mysql2/promise";
+import { encrypt, decrypt } from "../helpers/encryption"; // Import encryption utilities
 
 interface PrescriptionBody {
   rxcui: string;
@@ -14,16 +15,18 @@ interface PrescriptionBody {
 export const create = async (
   body: PrescriptionBody
 ): Promise<{ success: boolean; insertId: number }> => {
+  const encryptedMedicationName = encrypt(body.medication_name); // Encrypt medication name
+  const encryptedDosage = encrypt(body.dosage); // Encrypt dosage
   const [result] = await pool.query<ResultSetHeader>(
     `INSERT INTO prescriptions 
      (rxcui, medication_name, patient_id, prescriber_id, dosage, valid_from, valid_until) 
      VALUES (?, ?, ?, ?, ?, ?, ?)`,
     [
       body.rxcui,
-      body.medication_name,
+      encryptedMedicationName,
       body.patient_id,
       body.prescriber_id,
-      body.dosage,
+      encryptedDosage,
       body.valid_from,
       body.valid_until,
     ]
@@ -42,7 +45,11 @@ export const getById = async (id: string): Promise<any> => {
     "SELECT * FROM prescriptions WHERE id=?",
     [id]
   );
-  return result[0]; // Assuming only one result is returned.
+  const prescription = result[0];
+
+  prescription.medication_name = decrypt(prescription.medication_name);
+  prescription.dosage = decrypt(prescription.dosage);
+  return prescription;
 };
 
 export const deleteById = async (id: string): Promise<any> => {
