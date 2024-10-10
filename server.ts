@@ -31,7 +31,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 // Prescription routes
-app.use("/api/prescriptions", prescriptionRoutes);
+app.use("/", prescriptionRoutes);
 
 // Centralized error handler middleware
 app.use(errorMiddleware);
