@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import morgan from "morgan";
-import prescriptionRoutes from "./src/routes/prescriptions";
-import errorMiddleware from "./src/middleware/errorMiddleware";
+import prescriptionRoutes from "./routes/prescriptions";
+import errorMiddleware from "./middleware/errorMiddleware";
 
 dotenv.config();
 

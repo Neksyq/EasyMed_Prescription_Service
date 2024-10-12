@@ -13,8 +13,11 @@ RUN npm install
 # Bundle app source
 COPY . .
 
+# Compile TypeScript to JavaScript
+RUN npm run build
+
 # Expose port
-EXPOSE 3001
+EXPOSE ${PRESCRIPTION_PORT}
 
 # Start the application
 CMD ["npm", "start"]

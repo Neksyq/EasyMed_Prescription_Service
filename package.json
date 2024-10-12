@@ -1,10 +1,11 @@
 {
   "name": "prescription-service",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
-    "start": "node server.ts",
-    "dev": "nodemon server.ts"
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "nodemon src/server.ts"
   },
   "keywords": [],
   "author": "Nikita Andrianov",
@@ -23,6 +24,8 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
-    "@types/morgan": "^1.9.9"
+    "@types/morgan": "^1.9.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
   }
 }
