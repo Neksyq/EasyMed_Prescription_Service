@@ -9,14 +9,14 @@ import {
 import { prescriptionValidation } from "../middleware/validationMiddleware";
 const router = Router();
 
-router.post("/", prescriptionValidation, createPrescription);
+router.post("/prescriptions", prescriptionValidation, createPrescription);
 
-router.get("/", getPrescriptions);
+router.get("/prescriptions", getPrescriptions);
 
-router.get("/:id", getPrescriptionById);
+router.get("/prescriptions/:id", getPrescriptionById);
 
-router.delete("/:id", deletePrescription);
+router.delete("/prescriptions/:id", deletePrescription);
 
-router.patch("/:id", updatePrescription);
+router.patch("/prescriptions/:id", updatePrescription);
 
 export default router;
