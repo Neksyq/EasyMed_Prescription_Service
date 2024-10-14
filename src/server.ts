@@ -5,6 +5,7 @@ import rateLimit from "express-rate-limit";
 import morgan from "morgan";
 import prescriptionRoutes from "./routes/prescriptions";
 import errorMiddleware from "./middleware/errorMiddleware";
+import { runKafkaConsumer } from "./integrations/kafkaConsumer";
 
 dotenv.config();
 
@@ -36,7 +37,10 @@ app.use("/", prescriptionRoutes);
 // Centralized error handler middleware
 app.use(errorMiddleware);
 
+// Start the Kafka consumer
+runKafkaConsumer();
+
 // Start the server
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Prescription Service running on port ${PORT}`);
 });
