@@ -64,7 +64,7 @@ export const checkIfPrescriberExists = async (
   prescriberId?: number
 ): Promise<boolean> => {
   try {
-    let query = `SELECT COUNT(*) AS count FROM prescribers WHERE prescriberId = ?`;
+    let query = `SELECT COUNT(*) AS count FROM prescribers WHERE prescriber_id = ?`;
     const rows = await pool.query<ResultSetHeader>(query, [prescriberId]);
     return rows[0].fieldCount > 0;
   } catch (error) {
