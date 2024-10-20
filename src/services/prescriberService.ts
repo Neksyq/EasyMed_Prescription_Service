@@ -1,5 +1,6 @@
 import pool from "../config/db";
 import { ResultSetHeader } from "mysql2/promise";
+import { encrypt } from "../helpers/encryption";
 
 interface PrescriberBody {
   prescriberId: number;
@@ -38,17 +39,25 @@ export const createNewPrescriber = async (
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
+  const encryptedBody = Object.create(body);
+
+  Object.entries(body).forEach(([key, value]) => {
+    if (key !== "prescriberId") {
+      encryptedBody[key] = encrypt(value);
+    }
+  });
+
   const values = [
     body.prescriberId,
-    body.email,
-    body.first_name,
-    body.last_name,
+    encryptedBody.email,
+    encryptedBody.first_name,
+    encryptedBody.last_name,
     body.specialty,
-    body.medical_license_number,
-    body.license_issuing_country,
-    body.affiliated_hospital,
+    encryptedBody.medical_license_number,
+    encryptedBody.license_issuing_country,
+    encryptedBody.affiliated_hospital,
     body.gender,
-    body.phone_number,
+    encryptedBody.phone_number,
   ];
 
   try {
